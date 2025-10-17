@@ -1,19 +1,22 @@
+version: '3.8'
 services:
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    networks:
+      - fittrack-network
+    depends_on:
+      - activity-service
+      - user-service
+
   activity-service:
     build: ./services/activity-service
-    ports:
-      - "3001:3001"
-    environment:
-      - PORT=3001
     networks:
       - fittrack-network
 
   user-service:
     build: ./services/user-service
-    ports:
-      - "3002:3002"
-    environment:
-      - PORT=3002
     networks:
       - fittrack-network
 

@@ -1,0 +1,34 @@
+version: '3.8'
+services:
+  nginx:
+    image: fittrack-nginx
+    ports:
+      - "80:80"
+    networks:
+      - fittrack-network
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  activity-service:
+    image: fittrack-activity-service
+    networks:
+      - fittrack-network
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+
+  user-service:
+    image: fittrack-user-service
+    networks:
+      - fittrack-network
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+
+networks:
+  fittrack-network:
+    driver: overlay
